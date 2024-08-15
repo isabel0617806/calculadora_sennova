@@ -1,0 +1,39 @@
+header {
+  height: 300px;
+  width: 800px;
+  color: red;
+  background-color: blue;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  padding: 100px;
+  margin: 100px;
+}
+
+main {
+  height: 300px;
+  width: 800px;
+  color: blueviolet;
+  background-color: yellow;
+  padding: 100px;
+  margin: 100px;
+  border: 5px solid red;
+  border-radius: 30px 40px 50px 100px;
+}
+
+footer {
+  height: 300px;
+  width: 800px;
+  color: blue;
+  background-color: green;
+  padding: 100px;
+  margin: 100px;
+}
+
+button {
+  height: 100px;
+  width: auto;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
