@@ -1,46 +1,85 @@
+const calculadora = document.getElementById('calculadora');
+const resultado = document.getElementById('resultado');
 
-const calculadora = document.getElementById('calculadora')
-const resultado = document.getElementById('resultado')
+let operaciones = [];
+let currentInput = '';
 
-calculadora.addEventListener('click', añadirNumeros)
+calculadora.addEventListener('click', añadirNumeros);
 
-let operaciones = []
+function añadirNumeros(e) {
+    if (e.target.getAttribute('type') === 'button') {
+        const btn = e.target;
+        if (btn.className !== 'operacion') {
+            appendNumber(btn.innerText);
+        }
+        switch (btn.id) {
+            case 'sumar':
+                addOperation('+');
+                break;
+            case 'restar':
+                addOperation('-');
+                break;
+            case 'multiplicar':
+                addOperation('*');
+                break;
+            case 'dividir':
+                addOperation('/');
+                break;
+            case 'igual':
+                calculateResult();
+                break;
+            case 'clear':
+                clearCalculator();
+                break;
+        }
+    }
+}
 
-function añadirNumeros(e){
-	if(e.target.getAttribute('type') === 'button'){
-		if(e.target.className != 'operacion'){
-			resultado.value += e.target.innerText
-		}
-		if(e.target.id === 'sumar'){
-			operaciones.push(resultado.value)
-			operaciones.push('+')
-			calculadora.reset()
-		}
-		if(e.target.id === 'igual'){
-			operaciones.push(resultado.value)
-			calculadora.reset()
-			const resultadoOperacion = eval(operaciones.join(''))
-			resultado.value = resultadoOperacion
-			operaciones = []
-		}
-		if(e.target.id === 'restar'){
-			operaciones.push(resultado.value)
-			operaciones.push('-')
-			calculadora.reset()
-		}
-		if(e.target.id === 'multiplicar'){
-			operaciones.push(resultado.value)
-			operaciones.push('*')
-			calculadora.reset()
-		}
-		if(e.target.id === 'dividir'){
-			operaciones.push(resultado.value)
-			operaciones.push('/')
-			calculadora.reset()
-		}
-		if(e.target.id === 'clear'){
-			operaciones = []
-			calculadora.reset()
-		}
-	}
+function appendNumber(number) {
+    if (number === '.') {
+        if (currentInput.includes('.')) return; 
+        if (currentInput === '') {
+            currentInput = '0.';
+        } else {
+            currentInput += '.';
+        }
+    } else {
+        if (currentInput === '0' && number !== '.') {
+            currentInput = number;
+        } else {
+            currentInput += number;
+        }
+    }
+    updateDisplay();
+}
+
+function addOperation(operator) {
+    if (currentInput !== '') {
+        operaciones.push(currentInput);
+        operaciones.push(operator);
+        currentInput = '';
+        updateDisplay();
+    }
+}
+
+function calculateResult() {
+    if (currentInput !== '') {
+        operaciones.push(currentInput);
+    }
+    if (operaciones.length > 0) {
+        const resultadoOperacion = eval(operaciones.join(''));
+        resultado.value = resultadoOperacion;
+        operaciones = [];
+        currentInput = '';
+    }
+}
+
+function clearCalculator() {
+    operaciones = [];
+    currentInput = '';
+    updateDisplay();
+}
+
+function updateDisplay() {
+    resultado.value = currentInput;
 }
